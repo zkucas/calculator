@@ -2,7 +2,7 @@ let buttons = document.querySelectorAll("button");
 
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
-        playGame(getComputerChoice(), button.textContent.toUpperCase())
+        playGame(getComputerChoice(), button.textContent.toUpperCase().trim())
     })
 })
 
@@ -18,27 +18,43 @@ function getComputerChoice(){
 let playerWinCount = 0;
 let computerWinCount = 0;
 let div = document.querySelector('#display')
+let div2 = document.querySelector('#result')
 
 function playGame(a,b){
 
     if (a == b){
-        console.log("Play Again");
+        div.textContent = "Play Again!";
     }else if( b == 'ROCK' && a ==  "PAPER"){
-        console.log("You win! Rock beats " + a)
+        div.textContent = "You win! Rock beats " + a;
         playerWinCount+=1;
     }else if ( b == 'PAPER' && a == "SCISSOR"){
-        console.log("You lose! " + a + " beats " + b )
+        div.textContent = "You lose! " + a + " beats " + b;
         computerWinCount+=1;  
     }else if ( b == 'SCISSOR' && a == "PAPER"){
-        console.log("You win! SCISSOR beats " + a)
+        div.textContent = "You win! SCISSOR beats " + a;
         playerWinCount+=1;
     }
     else if (b == 'SCISSOR' && a == "ROCK" ){
-        console.log("You lose! " + a + " beats " + b )
+        div.textContent = "You lose! " + a + " beats " + b;
+        computerWinCount+=1; 
+    }else if (b == 'ROCK' && a ==  "SCISSOR"){
+        div.textContent = "You win! Rock beats " + a;
+        playerWinCount+=1;     
     }else{        
         div.textContent = "You picked " + b +" and computer picked " + a;
     }
-    return playerWinCount
+
+    div2.textContent = "Your result: " + playerWinCount + " Computer result: " + computerWinCount;
+
+    if ((playerWinCount) > 4){
+        div2.textContent = "You won the game!"
+        playerWinCount = 0;
+    }else if( computerWinCount > 4){
+        div2.textContent = "You lose the game!"
+        computerWinCount = 0;
+    }
+
+    return [playerWinCount,computerWinCount]
 }
 
-console.log(playerWinCount)
+
